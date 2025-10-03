@@ -43,6 +43,7 @@ class GHorg:  # pylint: disable=too-many-instance-attributes, too-many-lines
     gh_app_id: str | int = ""
     gh_app_private_key: str = ""
     create_repo: bool = False
+    add_renovate_config: bool = False
     default_repository_permission: str = ""
     current_org_owners: list[NamedUser] = field(default_factory=list)
     configured_org_owners: list[str] = field(default_factory=list)
@@ -727,6 +728,31 @@ class GHorg:  # pylint: disable=too-many-instance-attributes, too-many-lines
                                     auto_init=True,
                                 )
                                 existing_repo_names[repo_name] = repo
+
+                                if self.add_renovate_config:
+                                    renovate_content = (
+                                        '{\n'
+                                        '  "$schema": "https://docs.renovatebot.com/renovate-schema.json",\n'
+                                        '  "extends": ["github>DragonSecurity/renovate-presets"]\n'
+                                        '}\n'
+                                    )
+
+                                    try:
+                                        default_branch = repo.default_branch or "main"
+                                        repo.create_file(
+                                            path="renovate.json",
+                                            message="chore(renovate): add base renovate.json",
+                                            content=renovate_content,
+                                            branch=default_branch,
+                                        )
+                                        logging.info("Added renovate.json to '%s' on branch '%s'", repo.name, default_branch)
+                                    except GithubException as exc:
+                                        logging.warning(
+                                            "Could not add renovate.json to '%s': %s",
+                                            repo.name,
+                                            getattr(exc, "data", str(exc)),
+                                        )
+
                             except GithubException as exc:
                                 logging.critical(
                                     "Failed to create repository '%s': %s",
