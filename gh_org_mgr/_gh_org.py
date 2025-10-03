@@ -729,7 +729,7 @@ class GHorg:  # pylint: disable=too-many-instance-attributes, too-many-lines
                                 )
                                 existing_repo_names[repo_name] = repo
 
-                                if self.add_renovate_config:
+                                if self.org.add_renovate_config:
                                     renovate_content = (
                                         '{\n'
                                         '  "$schema": "https://docs.renovatebot.com/renovate-schema.json",\n'
