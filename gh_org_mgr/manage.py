@@ -112,6 +112,7 @@ def main():
         cfg_org, cfg_app, org.configured_teams = parse_config_files(args.config)
 
         org.create_repo = cfg_app.get("create_repo", False)
+        org.add_renovate_config = cfg_app.get("add_renovate_config", False)
 
         if not cfg_org.get("org_name"):
             logging.critical(
