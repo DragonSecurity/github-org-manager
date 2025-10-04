@@ -23,7 +23,7 @@ gh-org-mgr = 'gh_org_mgr.manage:main'
 
 [tool.poetry.dependencies]
 python = "^3.10"
-pygithub = "^2.7.0"
+pygithub = "^2.8.1"
 pyyaml = "^6.0.1"
 requests = "^2.32.3"
 python-slugify = "^8.0.4"
