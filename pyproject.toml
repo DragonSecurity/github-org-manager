@@ -22,7 +22,7 @@ packages = [{ include = "gh_org_mgr" }]
 gh-org-mgr = 'gh_org_mgr.manage:main'
 
 [tool.poetry.dependencies]
-python = "^3.10"
+python = "^3.13.7"
 pygithub = "^2.4.0"
 pyyaml = "^6.0.1"
 requests = "^2.32.3"
